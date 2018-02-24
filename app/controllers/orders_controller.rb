@@ -1,5 +1,7 @@
 class OrdersController < ApplicationController
   before_action :set_order, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
+  load_and_authorize_resource
 
   # GET /orders
   # GET /orders.json
@@ -31,6 +33,8 @@ class OrdersController < ApplicationController
     @sauda = Sauda.find(params[:sauda_id])
     respond_to do |format|
       if @order.save
+        @sauda.is_order_taken = true
+        @sauda.save
         format.html { redirect_to @sauda, notice: 'Order was successfully created.' }
         format.json { render :show, status: :created, location: @order }
       else

@@ -1,0 +1,12 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @role.name %>
+</p>
+
+<% if current_user.is_admin? %>
+	<%= link_to 'Edit', edit_role_path(@role), class: "ui button" %>
+	<%= link_to 'Destroy', @role, method: :delete, data: { confirm: 'Are you sure?' }, class: "ui red button" %><br/><br/>
+<% end %>
+<%= link_to 'Back', roles_path, class: "ui black button" %><br/><br/>

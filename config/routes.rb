@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
 
+  resources :roles
+  devise_for :users
+  resources :users
   resources :deliver_products
   resources :deliveries
   root 'saudas#index'
