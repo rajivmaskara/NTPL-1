@@ -12,6 +12,14 @@ class SaudasController < ApplicationController
   # GET /saudas/1
   # GET /saudas/1.json
   def show
+    @order = Order.find_by(sauda_id: @sauda.id)
+    if @order.present?
+      @order_products = OrderProduct.where(order_id: @order.id)
+    end
+    @delivery = Delivery.find_by(sauda_id: @sauda.id)
+    if @delivery.present?
+      @delivery_products = DeliveryProduct.where(delivery_id: @delivery.id)
+    end
   end
 
   # GET /saudas/new
@@ -28,7 +36,6 @@ class SaudasController < ApplicationController
   # POST /saudas.json
   def create
     @sauda = Sauda.new(sauda_params)
-
     respond_to do |format|
       if @sauda.save
         format.html { redirect_to @sauda, notice: 'Sauda was successfully created.' }
@@ -72,6 +79,6 @@ class SaudasController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def sauda_params
-      params.require(:sauda).permit(:number, :date, :customer_id, :is_order_taken, :is_delivered, sauda_line_items_attributes: [:id, :category_id, :rate, :quantity, :_destroy])
+      params.require(:sauda).permit(:number, :date, :customer_id, :is_order_taken, :is_delivered, :is_payment_done, sauda_line_items_attributes: [:id, :category_id, :rate, :quantity, :_destroy])
     end
 end

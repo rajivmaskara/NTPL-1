@@ -1,6 +1,8 @@
 class Customer < ActiveRecord::Base
 
-	has_many :orders
+	validates_presence_of :name, :number, :location
+	validates_uniqueness_of :number
+
 	has_many :saudas
 	
 end
